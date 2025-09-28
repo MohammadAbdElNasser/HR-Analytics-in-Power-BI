@@ -1,0 +1,80 @@
+NextReviewDate = 
+VAR reviewOrHire =
+    IF (
+        MAX ( FactPerformanceRating[ReviewDate] ) = BLANK (),
+        MAX ( DimEmployee[HireDate] ),
+        MAX ( FactPerformanceRating[ReviewDate] )
+    )
+RETURN
+    reviewOrHire + 365
+
+ ----------------------------------------------------------------------
+
+LastReviewDate = 
+IF (
+    MAX ( FactPerformanceRating[ReviewDate] ) = BLANK (),
+    "No Review Yet",
+    MAX ( FactPerformanceRating[ReviewDate] )
+
+ -----------------------------------------------------------------------
+
+InactiveEmployees = CALCULATE([TotalEmployees], FILTER(DimEmployee, DimEmployee[Attrition] = "Yes"))
+
+ -----------------------------------------------------------------------
+
+EnvironmentSatisfaction = 
+CALCULATE (
+    MAX ( FactPerformanceRating[EnvironmentSatisfaction] ),
+    USERELATIONSHIP ( FactPerformanceRating[EnvironmentSatisfaction], DimSatisfiedLevel[SatisfactionID] )
+)
+
+ -----------------------------------------------------------------------
+
+RelationshipSatisfaction = 
+CALCULATE (
+    MAX ( FactPerformanceRating[RelationshipSatisfaction] ),
+    USERELATIONSHIP ( FactPerformanceRating[RelationshipSatisfaction], DimSatisfiedLevel[SatisfactionID] )
+)
+
+ ------------------------------------------------------------------------
+
+WorkLifeBalance = 
+CALCULATE (
+    MAX ( FactPerformanceRating[WorkLifeBalance] ),
+    USERELATIONSHIP ( FactPerformanceRating[WorkLifeBalance], DimSatisfiedLevel[SatisfactionID] )
+)
+
+ ------------------------------------------------------------------------
+
+SelfRating = 
+CALCULATE (
+    MAX ( FactPerformanceRating[SelfRating] ),
+    USERELATIONSHIP ( FactPerformanceRating[SelfRating], DimRatingLevel[RatingID] )
+)
+
+ ------------------------------------------------------------------------
+
+ManagerRating = 
+CALCULATE (
+    MAX ( FactPerformanceRating[ManagerRating] ),
+    USERELATIONSHIP ( FactPerformanceRating[ManagerRating], DimRatingLevel[RatingID] )
+)
+
+ ------------------------------------------------------------------------
+
+% Attrition Rate = DIVIDE([InactiveEmployees], [TotalEmployees])
+
+ ------------------------------------------------------------------------
+
+% Attrition Rate Date = DIVIDE([InactiveEmployeesDate], [TotalEmployeesDate])
+
+ ------------------------------------------------------------------------
+
+TotalEmployeesDate = 
+CALCULATE (
+    [TotalEmployees],
+    USERELATIONSHIP ( DimEmployee[HireDate], DimDate[Date] )
+)
+
+ ------------------------------------------------------------------------
+

@@ -1,0 +1,11 @@
+In this Power BI case study, aim for exploring a dataset for a fictitious software company called Atlas Labs. 
+
+Focuses on helping in import, analyze and visualize Human Resources data in Power BI. 
+Building on an existing knowledge of the platform.
+
+We’ll carry out exploratory data analysis and will use DAX to help build powerful visualizations. We’ll finish working on this project by diving deeper into attrition and what factors impact attrition.
+
+This analysis will help the organization determine what action they will need to take to retain more employees.
+
+
+We’ll finalize the case study by making design changes to our report that provides a clean, branded design.
